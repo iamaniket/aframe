@@ -68,8 +68,17 @@ class Skeleton extends PureComponent {
     });
   }
   onSceneLoad = () => {
+    document.querySelector("a-scene").addEventListener("exit-vr", function () {
+      vrMode = false;
+      document
+        .querySelector("a-camera")
+        .removeChild(document.querySelector("a-camera").childNodes[0]);
+    });
     document.querySelector("a-scene").addEventListener("enter-vr", function () {
       vrMode = true;
+      // Add cursor to pick entity at runtime
+      var el = document.createElement("a-cursor");
+      document.querySelector("a-camera").appendChild(el);
     });
   };
   render() {
@@ -114,9 +123,7 @@ class Skeleton extends PureComponent {
             cursor="fuse: true; rayOrigin: mouse"
             raycaster="objects: .cursor-listener"
           ></a-entity>
-          <a-camera>
-            <a-cursor color="#FF0000"> </a-cursor>
-          </a-camera>
+          <a-camera></a-camera>
           <a-entity gltf-model="url(./scene.gltf)" position="0 2 -4"></a-entity>
           <a-image
             class="cursor-listener"

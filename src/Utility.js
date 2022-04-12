@@ -12,3 +12,7 @@ export const bodyDetails = [
   "Human ribs are flat bones that form part of the rib cage to help protect internal organs. Humans usually have 24 ribs, in 12 pairs.[2] 1 in 500 people have an extra rib known as a cervical rib. All are attached at the back to the thoracic vertebrae and are numbered from 1–12 according to the vertebrae to which they attach.",
   "Many mammals and other animals have grasping appendages similar in form to a hand such as paws, claws, and talons, but these are not scientifically considered to be grasping hands. The scientific use of the term hand in this sense to distinguish the terminations of the front paws from the hind ones is an example of anthropomorphism. The only true grasping hands appear in the mammalian order of primates. Hands must also have opposable thumbs, as described later in the text.",
 ];
+
+export const videoLink = "https://www.youtube.com/watch?v=Zoh7gG4EQVQ";
+export const videoInfo =
+  "360° Video of Timezone @ Macquarie Park NSW Australia 10 second footage 30 seconds to inject meta data 3 minutes export from video editor About 4-5 minutes processing time on YouTube 1920 x 960 resolution must be exact resolution of camera specification Encoded with Apple Pro Res 422 Proxy for minimal size; 57MB H.264 Codec recommended but the file was 286MB Apple Pro Res 422 LT; 120MB My Steps to create Video;";

@@ -2,30 +2,46 @@
 
 import React, { PureComponent, useState } from "react";
 import Skeleton from "./components/frame/skeleton/Skeleton";
-import BodyInfo from "./components/UI/BodyInfo";
+import InfoWrapper from "./components/UI/InfoWrapper";
+import VideoPlayer from "./components/frame/video360/VideoPlayer";
 import "./styles.css";
 import "aframe";
 function App() {
-  const [body, setBody] = useState("");
+  const [info, setInfo] = useState("");
+  const [bodyInfo, setBodyInfo] = useState(false);
+  const [videoInfo, setVideoInfo] = useState(false);
 
   const showBodyInfo = function (part) {
-    setBody(part);
+    setInfo(part);
+    setBodyInfo(true);
   };
 
-  const closeBodyInfo = function () {
-    setBody("");
+  const showVideoInfo = function (part) {
+    setVideoInfo(true);
+    setInfo(part);
+  };
+
+  const closeInfo = function () {
+    setInfo("");
+    setBodyInfo(false);
+    setVideoInfo(false);
   };
 
   return (
     <div>
-      <div className="bodyInfo">
-        {body.length > 0 ? (
-          <BodyInfo part={body} onClose={closeBodyInfo}></BodyInfo>
+      <div className="info">
+        {bodyInfo || videoInfo ? (
+          <InfoWrapper
+            part={info}
+            isVideo={videoInfo}
+            onClose={closeInfo}
+          ></InfoWrapper>
         ) : (
           <span />
         )}
       </div>
-      <Skeleton showBodyInfo={showBodyInfo} />
+      {/* {<Skeleton showInfo={showBodyInfo} />} */}
+      {/* {<VideoPlayer showInfo={showVideoInfo} />} */}
     </div>
   );
 }

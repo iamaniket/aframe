@@ -28,7 +28,7 @@ class Skeleton extends PureComponent {
           // HACK skipping first 5*2 events as I am not sure why they are here getting called.
           if (index >= skipClickCount) {
             // Show Ui component if VR mode is off
-            self.props.showBodyInfo(evt.target.id);
+            self.props.showInfo(evt.target.id);
           } else {
             console.log("index :" + index);
             index++;

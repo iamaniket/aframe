@@ -22,18 +22,34 @@ class Skeleton extends PureComponent {
 
     AFRAME.registerComponent("cursor-listener", {
       init: function () {
-        const skipClickCount = 8;
+        const skipClickCount = 9;
 
         this.el.addEventListener("click", function (evt) {
           // HACK skipping first 4*2 events as I am not sure why they are here getting called.
           if (index >= skipClickCount) {
+            if (evt.target.id === "close-info-btn") {
+              if (vrMode) {
+                // Hide the info panel and button
+                document
+                  .querySelector("#body-detail")
+                  .setAttribute("opacity", 0);
+                document
+                  .querySelector("#close-info-btn")
+                  .setAttribute("opacity", 0);
+              }
+
+              return;
+            }
             if (vrMode) {
-              // SHOW updated image info in vr mode using a image
+              // SHOW updated image info and close btn in vr mode using a image
               document
                 .querySelector("#body-detail")
                 .setAttribute("src", "url(./" + evt.target.id + ".png)");
 
               document.querySelector("#body-detail").setAttribute("opacity", 1);
+              document
+                .querySelector("#close-info-btn")
+                .setAttribute("opacity", 1);
             } else {
               // Show Ui component if VR mode is off
               self.props.showBodyInfo(evt.target.id);
@@ -55,7 +71,6 @@ class Skeleton extends PureComponent {
     return (
       <div>
         <a-scene
-          embedded
           background="color: #FAFAFA"
           loading-screen="dotsColor: red; backgroundColor: black"
           class="frame"
@@ -71,16 +86,25 @@ class Skeleton extends PureComponent {
             position="0 3 -3.7"
           ></a-image>
 
-          {
-            <a-image
-              src="url(./head.png)"
-              id="body-detail"
-              cursor="fuse: true; fuseTimeout: 500"
-              opacity="0"
-              height="2.5"
-              position="1.1 2 -3.7"
-            ></a-image>
-          }
+          <a-image
+            src="url(./head.png)"
+            id="body-detail"
+            cursor="fuse: true; fuseTimeout: 500"
+            opacity="0"
+            height="2.5"
+            position="1.1 2 -3.7"
+          ></a-image>
+          <a-image
+            class="cursor-listener"
+            cursor-listener
+            src="url(./close.png)"
+            opacity="0"
+            id="close-info-btn"
+            cursor="fuse: true; fuseTimeout: 500"
+            position="1.6 3.2 -3.6"
+            height="0.15"
+            width="0.15"
+          ></a-image>
 
           <a-entity
             cursor="rayOrigin: mouse"

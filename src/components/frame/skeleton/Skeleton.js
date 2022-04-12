@@ -22,10 +22,10 @@ class Skeleton extends PureComponent {
 
     AFRAME.registerComponent("cursor-listener", {
       init: function () {
-        const skipClickCount = 9;
+        const skipClickCount = 10;
 
         this.el.addEventListener("click", function (evt) {
-          // HACK skipping first 4*2 events as I am not sure why they are here getting called.
+          // HACK skipping first 5*2 events as I am not sure why they are here getting called.
           if (index >= skipClickCount) {
             if (evt.target.id === "close-info-btn") {
               if (vrMode) {

@@ -7,7 +7,7 @@ import "aframe";
 // HACKS to save some time
 var self;
 let index = 0;
-var vrMode = true;
+var vrMode = false;
 
 class Skeleton extends PureComponent {
   constructor(props) {
@@ -27,33 +27,38 @@ class Skeleton extends PureComponent {
         this.el.addEventListener("click", function (evt) {
           // HACK skipping first 5*2 events as I am not sure why they are here getting called.
           if (index >= skipClickCount) {
+            // Show Ui component if VR mode is off
+            self.props.showBodyInfo(evt.target.id);
+          } else {
+            console.log("index :" + index);
+            index++;
+          }
+        });
+
+        this.el.addEventListener("mouseenter", function (evt) {
+          // HACK skipping first 5*2 events as I am not sure why they are here getting called.
+          if (!vrMode) {
+            return;
+          }
+
+          if (index >= skipClickCount) {
             if (evt.target.id === "close-info-btn") {
-              if (vrMode) {
-                // Hide the info panel and button
-                document
-                  .querySelector("#body-detail")
-                  .setAttribute("opacity", 0);
-                document
-                  .querySelector("#close-info-btn")
-                  .setAttribute("opacity", 0);
-              }
-
-              return;
-            }
-            if (vrMode) {
-              // SHOW updated image info and close btn in vr mode using a image
-              document
-                .querySelector("#body-detail")
-                .setAttribute("src", "url(./" + evt.target.id + ".png)");
-
-              document.querySelector("#body-detail").setAttribute("opacity", 1);
+              // Hide the info panel and button
+              document.querySelector("#body-detail").setAttribute("opacity", 0);
               document
                 .querySelector("#close-info-btn")
-                .setAttribute("opacity", 1);
-            } else {
-              // Show Ui component if VR mode is off
-              self.props.showBodyInfo(evt.target.id);
+                .setAttribute("opacity", 0);
+              return;
             }
+            // SHOW updated image info and close btn in vr mode using a image
+            document
+              .querySelector("#body-detail")
+              .setAttribute("src", "url(./" + evt.target.id + ".png)");
+
+            document.querySelector("#body-detail").setAttribute("opacity", 1);
+            document
+              .querySelector("#close-info-btn")
+              .setAttribute("opacity", 1);
           } else {
             console.log("index :" + index);
             index++;
@@ -105,11 +110,13 @@ class Skeleton extends PureComponent {
             height="0.15"
             width="0.15"
           ></a-image>
-
           <a-entity
-            cursor="rayOrigin: mouse"
+            cursor="fuse: true; rayOrigin: mouse"
             raycaster="objects: .cursor-listener"
           ></a-entity>
+          <a-camera>
+            <a-cursor color="#FF0000"> </a-cursor>
+          </a-camera>
           <a-entity gltf-model="url(./scene.gltf)" position="0 2 -4"></a-entity>
           <a-image
             class="cursor-listener"
